@@ -10,9 +10,10 @@ public enum UnitOfMeasure {
     TSP ("Teaspoon"),
     LB ("Pound"),
     OZ ("Ounce"),
-    FLOZ ("Fluid Ounce"),
-    PINCH ("Pinch"),
-    WHOLE ("Whole");
+    FLZ ("Fluid Ounce"),
+    PCH ("Pinch"),
+    WH ("Whole"),
+    NA ("None");
 
     private String name;
 

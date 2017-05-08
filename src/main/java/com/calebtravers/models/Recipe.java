@@ -1,10 +1,9 @@
 package com.calebtravers.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 /**
@@ -26,6 +25,18 @@ public class Recipe {
     @Size(min=3, max=155)
     private String description;
 
+    @OneToMany
+    @JoinColumn(name="ingredient_id")
+    private List<Ingredient> ingredients;
+
+    @OneToMany
+    @JoinColumn(name="instruction_id")
+    private List<Instruction> instructions;
+
+    public Recipe(){
+
+    }
+
     public int getId() {
         return id;
     }
@@ -45,4 +56,6 @@ public class Recipe {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
