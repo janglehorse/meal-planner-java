@@ -9,7 +9,10 @@
     <h1 th:text="${title}">Default Title</h1>
     <p th:unless="${recipes} and ${recipes.size()}">No recipes! :(</p>
 
-    <p th:each="recipe : ${recipes}"> th:text="${text}">Default text.</p>
+    <div th:each="recipe : ${recipes}">
+        <h2 th:text="${recipe.name}"></h2>
+        <p th:text="${recipe.description}"></p>
+    </div>
 
 </body>
 </html>
