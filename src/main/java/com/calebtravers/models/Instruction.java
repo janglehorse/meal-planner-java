@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 /**
  * Created by adminbackup on 5/8/17.
  */
+
+@Entity
 public class Instruction {
 
     @Id

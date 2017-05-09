@@ -1,6 +1,8 @@
 package com.calebtravers.models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,9 +11,10 @@ import javax.validation.constraints.Size;
  * Created by adminbackup on 5/4/17.
  */
 
+@Entity
 public class Ingredient {
 
-    @NotNull
+    @Id
     @GeneratedValue
     private int id;
 
