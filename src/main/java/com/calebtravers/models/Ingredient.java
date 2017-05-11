@@ -23,21 +23,21 @@ public class Ingredient {
     private String name;
 
     @NotNull
-    private UnitOfMeasure unit;
+    private UnitOfMeasure unit = UnitOfMeasure.TBS;
 
     @NotNull
     @Digits(integer = 2, fraction = 2)
-    private BigDecimal quantity;
+    private BigDecimal quantity = BigDecimal.valueOf(0);
 
     @NotNull
-    private UnitOfMeasure unit_2;
+    private UnitOfMeasure unit_2 = UnitOfMeasure.NA;
 
     @NotNull
     @Digits(integer = 2, fraction = 2)
-    private BigDecimal quantity_2;
+    private BigDecimal quantity_2 = BigDecimal.valueOf(0);
 
     @NotNull
-    private Category category;
+    private Category category = Category.PRODUCE;
 
     @ManyToOne
     private Recipe recipe;
