@@ -3,6 +3,7 @@ package com.calebtravers.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,11 +28,11 @@ public class Recipe {
 
     @OneToMany
     @JoinColumn(name="ingredient_id")
-    private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name="instruction_id")
-    private List<Instruction> instructions;
+    private List<Instruction> instructions = new ArrayList<>();
 
     public Recipe(){
 
@@ -57,5 +58,12 @@ public class Recipe {
         this.description = description;
     }
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Instruction> getInstructions() {
+        return instructions;
+    }
 
 }

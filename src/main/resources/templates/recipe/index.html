@@ -10,7 +10,7 @@
     <p th:unless="${recipes} and ${recipes.size()}">No recipes! :(</p>
 
     <div th:each="recipe : ${recipes}">
-        <h2 th:text="${recipe.name}"></h2>
+        <a th:href="@{/recipes/view/{id}(id=${recipe.id})}"><h2 th:text="${recipe.name}"></h2></a>
         <p th:text="${recipe.description}"></p>
     </div>
 

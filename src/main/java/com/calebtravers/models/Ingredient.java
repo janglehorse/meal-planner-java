@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 /**
  * Created by adminbackup on 5/4/17.
@@ -26,15 +26,15 @@ public class Ingredient {
     private UnitOfMeasure unit;
 
     @NotNull
-    @Size(max=99)
-    private Float quantity;
+    @Digits(integer = 2, fraction = 2)
+    private BigDecimal quantity;
 
     @NotNull
     private UnitOfMeasure unit_2;
 
     @NotNull
-    @Size(max=99)
-    private Float quantity_2;
+    @Digits(integer = 2, fraction = 2)
+    private BigDecimal quantity_2;
 
     @NotNull
     private Category category;
@@ -65,11 +65,11 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public Float getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Float quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
@@ -81,11 +81,11 @@ public class Ingredient {
         this.unit_2 = unit_2;
     }
 
-    public Float getQuantity_2() {
+    public BigDecimal getQuantity_2() {
         return quantity_2;
     }
 
-    public void setQuantity_2(Float quantity_2) {
+    public void setQuantity_2(BigDecimal quantity_2) {
         this.quantity_2 = quantity_2;
     }
 
@@ -95,5 +95,13 @@ public class Ingredient {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
