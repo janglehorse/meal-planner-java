@@ -4,6 +4,7 @@ import com.calebtravers.models.Ingredient;
 import com.calebtravers.models.Instruction;
 import com.calebtravers.models.Recipe;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,19 +12,26 @@ import javax.validation.constraints.NotNull;
  */
 public class EditRecipeForm {
 
+    @Valid
     private Recipe recipe;
 
     //child objects
+    @Valid
     private Ingredient ingredient;
+    @Valid
     private Ingredient ingredient_2;
+    @Valid
     private Ingredient ingredient_3;
 
+    @Valid
     private Instruction instruction;
+    @Valid
     private Instruction instruction_2;
+    @Valid
     private Instruction instruction_3;
 
 
-    private int recipeId;
+    private int recipeId = this.getRecipeId();
     private int ingredientId;
     private int instructionId;
 

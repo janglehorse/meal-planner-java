@@ -1,6 +1,7 @@
 package com.calebtravers.models;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -28,10 +29,12 @@ public class Recipe {
 
     @OneToMany
     @JoinColumn(name="ingredient_id")
+    @Valid
     private List<Ingredient> ingredients = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name="instruction_id")
+    @Valid
     private List<Instruction> instructions = new ArrayList<>();
 
     public Recipe(){
@@ -62,8 +65,16 @@ public class Recipe {
         return ingredients;
     }
 
+    public void setIngredients(List<Ingredient> ingredients){
+        this.ingredients = ingredients;
+    }
+
     public List<Instruction> getInstructions() {
         return instructions;
+    }
+
+    public void setInstructions(List<Instruction> instructions){
+        this.instructions = instructions;
     }
 
 }

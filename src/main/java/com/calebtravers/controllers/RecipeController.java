@@ -83,13 +83,11 @@ public class RecipeController {
     public String DisplayEditRecipeForm(Model model,
                              @PathVariable int recipeId){
 
-        EditRecipeForm form = new EditRecipeForm(recipeDao.findOne(recipeId));
-        model.addAttribute("form", form);
-        model.addAttribute("units", UnitOfMeasure.values());
-        model.addAttribute("categories", Category.values());
+        Recipe recipe = recipeDao.findOne(recipeId);
+        model.addAttribute("recipe", recipe);
         model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
         model.addAttribute("instructions", instructionDao.findByRecipeId(recipeId));
-        model.addAttribute("title", "Edit " + recipeDao.findOne(recipeId).getName());
+        model.addAttribute("title", "Edit " + recipe.getName());
 
         return "recipe/edit";
     }
@@ -97,52 +95,24 @@ public class RecipeController {
     @RequestMapping(value="edit", method = RequestMethod.POST)
     public String ProcessEditRecipeForm(Model model,
                                         @RequestParam int recipeId,
-                                        @ModelAttribute @Valid EditRecipeForm form,
+                                        @ModelAttribute @Valid Recipe recipe,
                                         Errors errors){
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Edit " + recipeDao.findOne(recipeId).getName());
-            model.addAttribute("form", form);
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
+            model.addAttribute("instructions", instructionDao.findByRecipeId(recipeId));
             return "recipe/edit";
         }
 
         //process valid form data
-        Recipe recipe = recipeDao.findOne(recipeId);
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        theRecipe.setName(recipe.getName());
+        theRecipe.setDescription(recipe.getDescription());
+        recipeDao.save(theRecipe);
 
-        if(form.getIngredient().getName() != ""){
-            Ingredient ingredient = form.getIngredient();
-            ingredient.setRecipe(recipe);
-            ingredientDao.save(ingredient);
-        }
-        if(form.getIngredient_2().getName() !=""){
-            Ingredient ingredient2 = form.getIngredient_2();
-            ingredient2.setRecipe(recipe);
-            ingredientDao.save(ingredient2);
-        }
-        if(form.getIngredient_3().getName() != "") {
-            Ingredient ingredient3 = form.getIngredient_3();
-            ingredient3.setRecipe(recipe);
-            ingredientDao.save(ingredient3);
-        }
-        if(form.getInstruction().getText() != "") {
-            Instruction instruction = form.getInstruction();
-            instruction.setRecipe(recipe);
-            instructionDao.save(instruction);
-        }
-        if(form.getInstruction_2().getText() != ""){
-            Instruction instruction2 = form.getInstruction_2();
-            instruction2.setRecipe(recipe);
-            instructionDao.save(instruction2);
-        }
-        if(form.getInstruction_3().getText() != ""){
-            Instruction instruction3 = form.getInstruction_3();
-            instruction3.setRecipe(recipe);
-            instructionDao.save(instruction3);
-        }
-
-        recipeDao.save(recipe);
-
-        return "redirect:view/" + recipeId;
+        return "redirect:view/" + theRecipe.getId();
 
     }
 

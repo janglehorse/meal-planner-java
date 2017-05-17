@@ -8,6 +8,21 @@
 
 <h1 th:text="${title}"></h1>
 
+<form method="post" action="/recipes/edit" th:object="${recipe}">
+    <div class="form-group">
+        <label th:for="name">Recipe Name</label>
+        <input class="form-control" value="{$recipe.name}" size="55" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" value="${recipe.description}" size="55" th:field="*{description}" />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+    <input type="hidden" name="recipeId" th:value="${recipe.id}" />
+    <input type="submit" value="Update Recipe" />
+</form>
+
 <div class="container"
      th:each="ingredient : ${ingredients}">
     <table>
@@ -30,247 +45,6 @@
     </table>
 </div>
 
-<form method="post" style="max-width:600px;" action="/recipes/edit" th:object="${form}">
-
-    <table>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientName">Ingredient 1 Name:</label>
-                    <input th:field="*{ingredient.name}" />
-                    <div th:errors="*{ingredient.name}"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientQuantity">Ingredient 1 Quantity:</label>
-                    <input th:field="*{ingredient.quantity}" />
-                    <div th:errors="*{ingredient.quantity}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientUnit">Ingredeint 1 Measurement:</label>
-                    <select th:field="*{ingredient.unit}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientQuantity_2">Ingredient 1 2nd Quantity (opt):</label>
-                    <input th:field="*{ingredient.quantity_2}" />
-                    <div th:errors="*{ingredient.quantity_2}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientUnit_2">Ingredient 1 2nd Measurement (opt):</label>
-                    <select th:field="*{ingredient.unit_2}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredientCategory">Ingredient 1 Category:</label>
-                    <select th:field="*{ingredient.category}">
-                        <option th:each="category : ${categories}"
-                                th:value="${category}"
-                                th:text="${category.name}"></option>
-                    </select>
-                    _________________________________
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Name">Ingredient 2 Name:</label>
-                    <input th:field="*{ingredient_2.name}" />
-                    <div th:errors="*{ingredient_2.name}"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Quantity">Ingredient 2 Quantity:</label>
-                    <input th:field="*{ingredient_2.quantity}" />
-                    <div th:errors="*{ingredient_2.quantity}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Unit">Ingredient 2 Measurement:</label>
-                    <select th:field="*{ingredient_2.unit}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Quantity_2">Ingredient 2 2nd Quantity (opt):</label>
-                    <input th:field="*{ingredient_2.quantity_2}" />
-                    <div th:errors="*{ingredient_2.quantity_2}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Unit_2">Ingredient 2 2nd Measurement (opt):</label>
-                    <select th:field="*{ingredient_2.unit_2}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient2Category">Ingredient 2 Category:</label>
-                    <select th:field="*{ingredient_2.category}">
-                        <option th:each="category : ${categories}"
-                                th:value="${category}"
-                                th:text="${category.name}"></option>
-                    </select>
-                    _________________________________
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Name">Ingredient 3 Name:</label>
-                    <input th:field="*{ingredient_3.name}" />
-                    <div th:errors="*{ingredient_3.name}"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Quantity">Ingredient 3 Quantity:</label>
-                    <input th:field="*{ingredient_3.quantity}" />
-                    <div th:errors="*{ingredient_3.quantity}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Unit">Ingredient 3 Measurement:</label>
-                    <select th:field="*{ingredient_3.unit}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Quantity_2">Ingredient 3 2nd Quantity (opt):</label>
-                    <input th:field="*{ingredient_3.quantity_2}" />
-                    <div th:errors="*{ingredient_3.quantity_2}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Unit_2">Ingredient 3 2nd Measurement (opt):</label>
-                    <select th:field="*{ingredient_3.unit_2}">
-                        <option th:each="unit : ${units}"
-                                th:value="${unit}"
-                                th:text="${unit.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="ingredient3Category">Ingredient 3 Category:</label>
-                    <select th:field="*{ingredient_3.category}">
-                        <option th:each="category : ${categories}"
-                                th:value="${category}"
-                                th:text="${category.name}"></option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h2>Instructions:</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="instructionNumber">Number:</label>
-                    <input th:field="*{instruction.number}" />
-                    <div th:errors="*{instruction.number}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="instructionText">Instruction:</label>
-                    <input th:field="*{instruction.text}" />
-                    <div th:errors="*{instruction.text}"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="instruction2Number">Number:</label>
-                    <input th:field="*{instruction_2.number}" />
-                    <div th:errors="*{instruction_2.number}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="instruction2Text">Instruction:</label>
-                    <input th:field="*{instruction_2.text}" />
-                    <div th:errors="*{instruction_2.text}"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <label th:for="instruction2Number">Number:</label>
-                    <input th:field="*{instruction_3.number}" />
-                    <div th:errors="*{instruction_3.number}"></div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="instruction2Text">Instruction:</label>
-                    <input th:field="*{instruction_3.text}" />
-                    <div th:errors="*{instruction_3.text}"></div>
-                </div>
-            </td>
-        </tr>
-
-    </table>
-
-    <input type="hidden" name="recipeId" th:value="${form.recipe.Id}" />
-    <input type="submit" value="Update Recipe" />
-</form>
 
 </body>
 </html>
