@@ -8,6 +8,10 @@
 
 <h1 th:text="${title}"></h1>
 
+<p><a th:href="@{/recipes/edit/{id}(id=${recipe.id})}">Edit Recipe Name and Description</a></p>
+<p><a th:href="@{/ingredients/add/{id}(id=${recipe.id})}">Add Ingredients</a></p>
+<p><a th:href="@{/recipes/delete/{id}(id=${recipe.id})}">Delete Recipe</a></p>
+
 <div class="container"
      th:each="ingredient : ${ingredients}">
     <table>
@@ -29,10 +33,6 @@
         </tr>
     </table>
 </div>
-
-<p><a th:href="@{/recipes/edit/{id}(id=${recipe.id})}">Edit</a></p>
-<p><a th:href="@{/recipes/delete/{id}(id=${recipe.id})}">Delete</a></p>
-
 
 </body>
 </html>

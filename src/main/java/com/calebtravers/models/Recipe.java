@@ -69,12 +69,20 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public void addIngredient(Ingredient ingredient){
+        this.ingredients.add(ingredient);
+    }
+
     public List<Instruction> getInstructions() {
         return instructions;
     }
 
     public void setInstructions(List<Instruction> instructions){
         this.instructions = instructions;
+    }
+
+    public void addInstruction(Instruction instruction){
+        this.instructions.add(instruction);
     }
 
 }
