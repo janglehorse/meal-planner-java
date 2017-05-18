@@ -104,4 +104,15 @@ public class Ingredient {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public void copyAttributes(Ingredient ingredient){
+
+        this.setName(ingredient.getName());
+        this.setQuantity(ingredient.getQuantity());
+        this.setUnit(ingredient.getUnit());
+        this.setQuantity_2(ingredient.getQuantity_2());
+        this.setUnit_2(ingredient.getUnit_2());
+        this.setCategory(ingredient.getCategory());
+
+    }
 }

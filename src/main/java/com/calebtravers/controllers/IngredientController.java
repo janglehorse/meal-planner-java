@@ -77,10 +77,11 @@ public class IngredientController {
                                          @PathVariable int recipeId,
                                          @PathVariable int ingredientId){
 
+        Recipe recipe = recipeDao.findOne(recipeId);
         Ingredient ingredient = ingredientDao.findOne(ingredientId);
 
         model.addAttribute("title", "Edit " + ingredient.getName());
-        model.addAttribute("recipe", recipeDao.findOne(recipeId));
+        model.addAttribute(recipe);
         model.addAttribute(ingredient);
         model.addAttribute("units", UnitOfMeasure.values());
         model.addAttribute("categories", Category.values());
@@ -91,23 +92,24 @@ public class IngredientController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public String processEditIngredientForm(Model model,
                                             @RequestParam int recipeId,
+                                            @RequestParam int ingredientId,
                                             @ModelAttribute @Valid Ingredient ingredient,
                                             Errors errors){
+
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        Ingredient updateIngredient = ingredientDao.findOne(ingredientId);
 
         if(errors.hasErrors()){
 
             model.addAttribute("title", "Edit " + ingredient.getName());
             model.addAttribute("recipe", recipeDao.findOne(recipeId));
-            model.addAttribute(ingredient);
+            model.addAttribute("ingredient", updateIngredient);
             model.addAttribute("units", UnitOfMeasure.values());
             model.addAttribute("categories", Category.values());
         }
 
-        Recipe theRecipe = recipeDao.findOne(recipeId);
-        ingredient.setRecipe(theRecipe);
-        theRecipe.addIngredient(ingredient);
-        ingredientDao.save(ingredient);
-        recipeDao.save(theRecipe);
+        updateIngredient.copyAttributes(ingredient);
+        ingredientDao.save(updateIngredient);
 
         return "redirect:/recipes/view/" + recipeId;
 
@@ -133,7 +135,10 @@ public class IngredientController {
     public String processDeleteIngredientForm(@RequestParam int ingredientId,
                                               @RequestParam int recipeId){
 
+        Ingredient deleteIngredient = ingredientDao.findOne(ingredientId);
+
         ingredientDao.delete(ingredientId);
+        recipeDao.findOne(recipeId).getIngredients().remove(deleteIngredient);
 
         return "redirect:/recipes/view/" + recipeId;
 
