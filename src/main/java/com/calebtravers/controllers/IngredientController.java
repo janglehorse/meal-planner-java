@@ -5,7 +5,6 @@ import com.calebtravers.models.Ingredient;
 import com.calebtravers.models.Recipe;
 import com.calebtravers.models.UnitOfMeasure;
 import com.calebtravers.models.data.IngredientDao;
-import com.calebtravers.models.data.InstructionDao;
 import com.calebtravers.models.data.RecipeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +25,6 @@ public class IngredientController {
     RecipeDao recipeDao;
     @Autowired
     private IngredientDao ingredientDao;
-    @Autowired
-    private InstructionDao instructionDao;
 
     @RequestMapping(value = "add/{recipeId}", method = RequestMethod.GET)
     public String addIngredient(@PathVariable int recipeId,
