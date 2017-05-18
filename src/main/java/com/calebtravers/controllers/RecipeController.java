@@ -65,6 +65,11 @@ public class RecipeController {
 
     }
 
+    //TODO:
+    // CREATE OPTIONAL QUERY STRING TO CREATE CONFIRMATION MESSAGES FOR INGREDIENT & INSTRUCTION
+    // CREATE, UPDATE, DELETE
+    // @RequestParam(value = "msg", required = false) String msg,
+
     @RequestMapping(value="view/{recipeId}", method = RequestMethod.GET)
     public String RecipeDetail(Model model,
                                @PathVariable int recipeId){
@@ -75,6 +80,7 @@ public class RecipeController {
         model.addAttribute("recipe", theRecipe);
         model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
         model.addAttribute("instructions", instructionDao.findByRecipeId(recipeId));
+
 
         return "recipe/detail";
     }

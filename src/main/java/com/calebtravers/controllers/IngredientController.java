@@ -75,4 +75,79 @@ public class IngredientController {
 
     }
 
+    @RequestMapping(value = "edit/{ingredientId}/{recipeId}", method = RequestMethod.GET)
+    public String postEditIngredientForm(Model model,
+                                         @PathVariable int recipeId,
+                                         @PathVariable int ingredientId){
+
+        Ingredient ingredient = ingredientDao.findOne(ingredientId);
+
+        model.addAttribute("title", "Edit " + ingredient.getName());
+        model.addAttribute("recipe", recipeDao.findOne(recipeId));
+        model.addAttribute(ingredient);
+        model.addAttribute("units", UnitOfMeasure.values());
+        model.addAttribute("categories", Category.values());
+
+        return "ingredient/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditIngredientForm(Model model,
+                                            @RequestParam int recipeId,
+                                            @ModelAttribute @Valid Ingredient ingredient,
+                                            Errors errors){
+
+        if(errors.hasErrors()){
+
+            model.addAttribute("title", "Edit " + ingredient.getName());
+            model.addAttribute("recipe", recipeDao.findOne(recipeId));
+            model.addAttribute(ingredient);
+            model.addAttribute("units", UnitOfMeasure.values());
+            model.addAttribute("categories", Category.values());
+        }
+
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        ingredient.setRecipe(theRecipe);
+        theRecipe.addIngredient(ingredient);
+        ingredientDao.save(ingredient);
+        recipeDao.save(theRecipe);
+
+        return "redirect:/recipes/view/" + recipeId;
+
+    }
+
+    @RequestMapping(value="delete/{ingredientId}/{recipeId}", method=RequestMethod.GET)
+    public String postDeleteIngredientForm(Model model,
+                                           @PathVariable int ingredientId,
+                                           @PathVariable int recipeId){
+
+        Ingredient ingredient = ingredientDao.findOne(ingredientId);
+        Recipe recipe = recipeDao.findOne(recipeId);
+        model.addAttribute("title", "Are you sure you want to delete " + ingredient.getName() +
+                            " from" + recipe.getName() + "?");
+        model.addAttribute(ingredient);
+        model.addAttribute("recipeId", recipeId);
+
+        return "ingredient/delete";
+    }
+
+
+    @RequestMapping(value="delete", method = RequestMethod.POST)
+    public String processDeleteIngredientForm(@RequestParam int ingredientId,
+                                              @RequestParam int recipeId){
+
+        ingredientDao.delete(ingredientId);
+
+        return "redirect:/recipes/view/" + recipeId;
+
+        //TODO:
+        //STORE DELETED INGREDIENT NAME IN VAR:
+        //String confirmDelete = ingredientDao.findOne(ingredientId).getName();
+        //SEND VAR IN QUERY STRING TO RECIPE CONTROLLER TO RENDER CONFIRMATION MESSAGE
+        //+ "?msg=" + confirmDelete;
+
+    }
+
+
+
 }
