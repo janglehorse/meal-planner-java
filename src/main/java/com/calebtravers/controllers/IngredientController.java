@@ -30,9 +30,9 @@ public class IngredientController {
     public String addIngredient(@PathVariable int recipeId,
                                 Model model){
 
-        model.addAttribute("title", "Add ingredient to " + recipeDao.findOne(recipeId).getName());
-        model.addAttribute("recipeId", recipeId);
         model.addAttribute(new Ingredient());
+        model.addAttribute("recipeId", recipeId);
+        model.addAttribute("title", "Add ingredient to " + recipeDao.findOne(recipeId).getName());
         model.addAttribute("categories", Category.values());
         model.addAttribute("units", UnitOfMeasure.values());
 
@@ -48,9 +48,9 @@ public class IngredientController {
                                        Errors errors){
 
         if(errors.hasErrors()){
-            model.addAttribute("title", "Add ingredient to " + recipeDao.findOne(recipeId).getName());
-            model.addAttribute("recipeId", recipeId);
             model.addAttribute(ingredient);
+            model.addAttribute("recipeId", recipeId);
+            model.addAttribute("title", "Add ingredient to " + recipeDao.findOne(recipeId).getName());
             model.addAttribute("categories", Category.values());
             model.addAttribute("units", UnitOfMeasure.values());
             return "ingredient/add";
@@ -80,9 +80,9 @@ public class IngredientController {
         Recipe recipe = recipeDao.findOne(recipeId);
         Ingredient ingredient = ingredientDao.findOne(ingredientId);
 
-        model.addAttribute("title", "Edit " + ingredient.getName());
         model.addAttribute(recipe);
         model.addAttribute(ingredient);
+        model.addAttribute("title", "Edit " + ingredient.getName());
         model.addAttribute("units", UnitOfMeasure.values());
         model.addAttribute("categories", Category.values());
 
@@ -101,9 +101,9 @@ public class IngredientController {
 
         if(errors.hasErrors()){
 
-            model.addAttribute("title", "Edit " + ingredient.getName());
-            model.addAttribute("recipe", recipeDao.findOne(recipeId));
             model.addAttribute("ingredient", updateIngredient);
+            model.addAttribute("recipe", recipeDao.findOne(recipeId));
+            model.addAttribute("title", "Edit " + ingredient.getName());
             model.addAttribute("units", UnitOfMeasure.values());
             model.addAttribute("categories", Category.values());
         }
@@ -122,10 +122,11 @@ public class IngredientController {
 
         Ingredient ingredient = ingredientDao.findOne(ingredientId);
         Recipe recipe = recipeDao.findOne(recipeId);
-        model.addAttribute("title", "Are you sure you want to delete " + ingredient.getName() +
-                            " from" + recipe.getName() + "?");
+
         model.addAttribute(ingredient);
         model.addAttribute("recipeId", recipeId);
+        model.addAttribute("title", "Are you sure you want to delete " + ingredient.getName() +
+                            " from" + recipe.getName() + "?");
 
         return "ingredient/delete";
     }
@@ -136,9 +137,11 @@ public class IngredientController {
                                               @RequestParam int recipeId){
 
         Ingredient deleteIngredient = ingredientDao.findOne(ingredientId);
+        Recipe recipe = recipeDao.findOne(recipeId);
 
+        recipe.getIngredients().remove(deleteIngredient);
+        recipeDao.save(recipe);
         ingredientDao.delete(ingredientId);
-        recipeDao.findOne(recipeId).getIngredients().remove(deleteIngredient);
 
         return "redirect:/recipes/view/" + recipeId;
 

@@ -112,9 +112,10 @@ public class InstructionController {
 
         Instruction instruction = instructionDao.findOne(instructionId);
         Recipe recipe = recipeDao.findOne(recipeId);
-        model.addAttribute("title", "Delete this instruction from " + recipe.getName() + "?");
+
         model.addAttribute(instruction);
         model.addAttribute("recipeId", recipeId);
+        model.addAttribute("title", "Delete this instruction from " + recipe.getName() + "?");
 
         return "instruction/delete";
     }
@@ -125,9 +126,11 @@ public class InstructionController {
                                               @RequestParam int recipeId){
 
         Instruction deleteInstruction = instructionDao.findOne(instructionId);
+        Recipe recipe = recipeDao.findOne(recipeId);
 
+        recipe.getInstructions().remove(deleteInstruction);
+        recipeDao.save(recipe);
         instructionDao.delete(instructionId);
-        recipeDao.findOne(recipeId).getInstructions().remove(deleteInstruction);
 
         return "redirect:/recipes/view/" + recipeId;
 

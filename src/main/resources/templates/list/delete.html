@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+    <h1 th:text="${title}"></h1>
+
+    <div class="container">
+        <p th:text="${list.name}"></p>
+    </div>
+
+    <form method="post" style="max-width:600px;" action="/lists/delete">
+        <input type="hidden" name="listId" th:value="${list.id}" />
+        <input type="submit" value="Confirm Delete" />
+    </form>
+
+</body>
+</html>

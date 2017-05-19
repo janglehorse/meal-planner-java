@@ -37,6 +37,9 @@ public class Recipe {
     @Valid
     private List<Instruction> instructions = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "recipes")
+    private List<ShoppingList> shoppingLists = new ArrayList<>();
+
     public Recipe(){
 
     }
@@ -70,7 +73,7 @@ public class Recipe {
     }
 
     public void addIngredient(Ingredient ingredient){
-        this.ingredients.add(ingredient);
+        this.getIngredients().add(ingredient);
     }
 
     public List<Instruction> getInstructions() {
@@ -82,7 +85,14 @@ public class Recipe {
     }
 
     public void addInstruction(Instruction instruction){
-        this.instructions.add(instruction);
+        this.getInstructions().add(instruction);
     }
 
+    public List<ShoppingList> getShoppingLists() {
+        return shoppingLists;
+    }
+
+    public void setShoppingLists(List<ShoppingList> shoppingLists) {
+        this.shoppingLists = shoppingLists;
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by adminbackup on 5/3/17.
@@ -76,6 +77,7 @@ public class RecipeController {
 
         Recipe theRecipe = recipeDao.findOne(recipeId);
         String title = recipeDao.findOne(recipeId).getName();
+
         model.addAttribute("title", title);
         model.addAttribute("recipe", theRecipe);
         model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
@@ -90,6 +92,7 @@ public class RecipeController {
                              @PathVariable int recipeId){
 
         Recipe recipe = recipeDao.findOne(recipeId);
+
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
         model.addAttribute("instructions", instructionDao.findByRecipeId(recipeId));
@@ -113,12 +116,12 @@ public class RecipeController {
         }
 
         //process valid form data
-        Recipe theRecipe = recipeDao.findOne(recipeId);
-        theRecipe.setName(recipe.getName());
-        theRecipe.setDescription(recipe.getDescription());
-        recipeDao.save(theRecipe);
+        Recipe updateRecipe = recipeDao.findOne(recipeId);
+        updateRecipe.setName(recipe.getName());
+        updateRecipe.setDescription(recipe.getDescription());
+        recipeDao.save(updateRecipe);
 
-        return "redirect:view/" + theRecipe.getId();
+        return "redirect:view/" + updateRecipe.getId();
 
     }
 
@@ -138,6 +141,11 @@ public class RecipeController {
     @RequestMapping(value= "delete", method = RequestMethod.POST)
     public String ProcessDeleteForm(@RequestParam int id){
 
+        List<Ingredient> deleteIngredients = ingredientDao.findByRecipeId(id);
+        List<Instruction> deleteInstructions = instructionDao.findByRecipeId(id);
+
+        ingredientDao.delete(deleteIngredients);
+        instructionDao.delete(deleteInstructions);
         recipeDao.delete(id);
 
         return "redirect:/recipes";
