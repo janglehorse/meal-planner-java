@@ -73,8 +73,7 @@ public class InstructionController {
         Instruction instruction = instructionDao.findOne(instructionId);
         Recipe recipe = recipeDao.findOne(recipeId);
 
-        model.addAttribute("title", "Edit instruction number" + instruction.getNumber() +
-                            "for " + recipe.getName());
+        model.addAttribute("title", "Edit instruction for " + recipe.getName());
         model.addAttribute(recipe);
         model.addAttribute(instruction);
 
@@ -93,8 +92,7 @@ public class InstructionController {
 
         if(errors.hasErrors()){
 
-            model.addAttribute("title", "Edit instruction number" + instruction.getNumber() +
-                                "for " + recipe.getName());
+            model.addAttribute("title", "Edit instruction for " + recipe.getName());
             model.addAttribute(recipe);
             model.addAttribute("instruction", updateInstruction);
         }
@@ -104,6 +102,40 @@ public class InstructionController {
         instructionDao.save(updateInstruction);
 
         return "redirect:/recipes/view/" + recipeId;
+
+    }
+
+    @RequestMapping(value="delete/{instructionId}/{recipeId}", method=RequestMethod.GET)
+    public String postDeleteInstructionForm(Model model,
+                                           @PathVariable int instructionId,
+                                           @PathVariable int recipeId){
+
+        Instruction instruction = instructionDao.findOne(instructionId);
+        Recipe recipe = recipeDao.findOne(recipeId);
+        model.addAttribute("title", "Delete this instruction from " + recipe.getName() + "?");
+        model.addAttribute(instruction);
+        model.addAttribute("recipeId", recipeId);
+
+        return "instruction/delete";
+    }
+
+
+    @RequestMapping(value="delete", method = RequestMethod.POST)
+    public String processDeleteInstructionForm(@RequestParam int instructionId,
+                                              @RequestParam int recipeId){
+
+        Instruction deleteInstruction = instructionDao.findOne(instructionId);
+
+        instructionDao.delete(instructionId);
+        recipeDao.findOne(recipeId).getInstructions().remove(deleteInstruction);
+
+        return "redirect:/recipes/view/" + recipeId;
+
+        //TODO:
+        //STORE DELETED INGREDIENT NAME IN VAR:
+        //String confirmDelete = instructionDao.findOne(instructionId).getName();
+        //SEND VAR IN QUERY STRING TO RECIPE CONTROLLER TO RENDER CONFIRMATION MESSAGE
+        //+ "?msg=" + confirmDelete;
 
     }
 
