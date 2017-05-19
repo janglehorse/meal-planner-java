@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 
-<h1 th:text="${title}"></h1>
+<nav th:replace="fragments :: navigation"></nav>
 
-<p><a th:href="@{/lists/edit/{id}(id=${list.id})}">Edit List Title</a></p>
-<p><a th:href="@{/lists/addRecipe/{id}(id=${list.id})}">Add a Recipe to This List</a></p>
-<p><a th:href="@{/lists/removeRecipe/{id}(id=${list.id})}">Remove a Recipe From This List</a></p>
-<p><a th:href="@{/lists/delete/{id}(id=${list.id})}">Delete This List</a></p>
-
-
+<div class="container">
+    <h1 th:text="${title}"></h1>
+</div>
+<br />
 <div class="container"
      th:each="recipe : ${list.recipes}">
     <strong><p th:text="'For the '+ ${recipe.name} + ':'"></p></strong>
 
     <table th:each="ingredient : ${recipe.ingredients}">
         <tr>
-            <td><p th:text="${ingredient.name}"></p></td>
-            <td><p th:text="${ingredient.quantity}"></p></td>
-            <td><p th:text="${ingredient.unit.name}"></p></td>
-            <td><p th:text="${ingredient.quantity_2}"></p></td>
-            <td><p th:text="${ingredient.unit_2.name}"></p></td>
+            <td><p th:text="${ingredient.name} + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.quantity_2}+ '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.unit_2.name}+ '&nbsp;'"></p></td>
         </tr>
     </table>
+</div>
+<br />
+<div class="container">
+    <p><a th:href="@{/lists/edit/{id}(id=${list.id})}">Edit List Title</a></p>
+    <p><a th:href="@{/lists/addRecipe/{id}(id=${list.id})}">Add a Recipe to This List</a></p>
+    <p><a th:href="@{/lists/removeRecipe/{id}(id=${list.id})}">Remove a Recipe From This List</a></p>
+    <p><a th:href="@{/lists/delete/{id}(id=${list.id})}">Delete This List</a></p>
 </div>
 
 

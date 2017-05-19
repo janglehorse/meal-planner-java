@@ -152,5 +152,26 @@ public class RecipeController {
 
     }
 
+    @RequestMapping(value="search", method = RequestMethod.GET)
+    public String recipeSearchResults(Model model,
+                                      @RequestParam String searchTerm){
+
+        if(!searchTerm.matches("[a-zA-Z0-9]+")) {
+
+
+            if (recipeDao.findByName(searchTerm).size() > 0) {
+                model.addAttribute("title", "Search results for " + searchTerm);
+                model.addAttribute("results", recipeDao.findByName(searchTerm));
+            } else {
+                model.addAttribute("title", "No results for " + searchTerm);
+            }
+        }
+        else{
+            model.addAttribute("title", "Please enter numbers or letters for search");
+        }
+
+        return "recipe/search";
+
+    }
 
 }

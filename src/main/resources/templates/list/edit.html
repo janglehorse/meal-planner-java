@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<nav th:replace="fragments :: navigation"></nav>
+
+
 <h1 th:text="${title}"></h1>
 
 <form method="post" action="/lists/edit" th:object="${list}">
