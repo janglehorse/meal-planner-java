@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Title</title>
-</head>
+<nav th:replace="fragments :: head"></nav>
+
 <body>
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<h1 th:text="${title}"></h1>
 
-<p><a th:href="@{/recipes/edit/{id}(id=${recipe.id})}">Edit Recipe Name and Description</a></p>
-<p><a th:href="@{/ingredients/add/{id}(id=${recipe.id})}">Add Ingredients</a></p>
-<p><a th:href="@{/instructions/add/{id}(id=${recipe.id})}">Add Instructions</a></p>
-<p><a th:href="@{/recipes/delete/{id}(id=${recipe.id})}">Delete Recipe</a></p>
 
+<div class="container">
+    <h1 th:text="${title}"></h1>
+    <p><a th:href="@{/recipes/edit/{id}(id=${recipe.id})}">Edit Recipe Name and Description</a></p>
+    <p><a th:href="@{/ingredients/add/{id}(id=${recipe.id})}">Add Ingredients</a></p>
+    <p><a th:href="@{/instructions/add/{id}(id=${recipe.id})}">Add Instructions</a></p>
+    <p><a th:href="@{/recipes/delete/{id}(id=${recipe.id})}">Delete Recipe</a></p>
+
+</div>
+
+<div class="container">
+<h3>Ingredients:</h3>
+<br/>
+</div>
+<!--
+th:if="${not #strings.startsWith(writer.name,'K')}"
+-->
 <div class="container"
      th:each="ingredient : ${ingredients}">
     <table>
         <tr>
-            <td><p th:text="${ingredient.name}"></p></td>
-            <td><p th:text="${ingredient.quantity}"></p></td>
-            <td><p th:text="${ingredient.unit.name}"></p></td>
-            <td><p th:text="${ingredient.quantity_2}"></p></td>
-            <td><p th:text="${ingredient.unit_2.name}"></p></td>
-        </tr>
-        <tr>
+            <td><p th:text="${ingredient.name} + ',' + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+            <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+            <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
             <td><p><a th:href="@{/ingredients/edit/{id}/{recipeId}(id=${ingredient.id},recipeId=${recipe.id})}">Edit</a></p></td>
         </tr>
     </table>
 </div>
+
+<div class="container">
+    <h3>Instructions:</h3>
+    <br/>
+</div>
+
 <div class="container"
      th:each="instruction : ${instructions}">
     <table>
         <tr>
-            <td><p th:text="${instruction.number}"></p></td>
-            <td><p th:text="${instruction.text}"></p></td>
-        </tr>
-        <tr>
+            <td><strong><p th:text="${instruction.number} + '&nbsp;'"></p></strong></td>
+            <td><p th:text="${instruction.text} + '&nbsp;'"></p></td>
             <td><p><a th:href="@{/instructions/edit/{id}/{recipeId}(id=${instruction.id},recipeId=${recipe.id})}">Edit</a></p></td>
         </tr>
     </table>
