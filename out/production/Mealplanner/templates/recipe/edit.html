@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Title</title>
+</head>
+<body>
+
+<h1 th:text="${title}"></h1>
+
+<form method="post" action="/recipes/edit" th:object="${recipe}">
+    <div class="form-group">
+        <label th:for="name">Recipe Name</label>
+        <input class="form-control" value="{$recipe.name}" size="55" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" value="${recipe.description}" size="55" th:field="*{description}" />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+    <input type="hidden" name="recipeId" th:value="${recipe.id}" />
+    <input type="submit" value="Update Recipe" />
+</form>
+
+<div class="container"
+     th:each="ingredient : ${ingredients}">
+    <table>
+        <tr>
+            <td><p th:text="${ingredient.name}"></p></td>
+            <td><p th:text="${ingredient.quantity}"></p></td>
+            <td><p th:text="${ingredient.unit.name}"></p></td>
+            <td><p th:text="${ingredient.quantity_2}"></p></td>
+            <td><p th:text="${ingredient.unit_2.name}"></p></td>
+        </tr>
+    </table>
+</div>
+<div class="container"
+     th:each="instruction : ${instructions}">
+    <table>
+        <tr>
+            <td><p th:text="${instruction.number}"></p></td>
+            <td><p th:text="${instruction.text}"></p></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>
