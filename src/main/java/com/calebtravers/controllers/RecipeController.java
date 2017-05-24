@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -162,18 +163,25 @@ public class RecipeController {
 
         if(searchTerm.matches("[a-zA-Z0-9]+")) {
 
+            ArrayList<Recipe> results = new ArrayList<>();
 
-            if (recipeDao.findByName(searchTerm).size() > 0) {
+            for(Recipe recipe : recipeDao.findAll()){
+
+                if(recipe.getName().contains(searchTerm)){
+                    results.add(recipe);
+                }
+            }
+
+            if (results.size() > 0) {
                 model.addAttribute("title", "Search results for " + "'" +  searchTerm + "'");
-                model.addAttribute("results", recipeDao.findByName(searchTerm));
+                model.addAttribute("results", results);
             } else {
                 model.addAttribute("title", "Search results for " + "'" +  searchTerm + "'");
-                model.addAttribute("message", "No results for " + searchTerm);
             }
         }
         else{
             model.addAttribute("title", "Please enter numbers or letters for search");
-        }
+      }
 
         return "recipe/search";
 
