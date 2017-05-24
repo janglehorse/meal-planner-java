@@ -115,6 +115,11 @@ public class IngredientController {
         updateIngredient.copyAttributes(ingredient);
         ingredientDao.save(updateIngredient);
 
+        if(!theRecipe.getIngredients().contains(updateIngredient)){
+            theRecipe.addIngredient(updateIngredient);
+            recipeDao.save(theRecipe);
+        }
+
         return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
     }

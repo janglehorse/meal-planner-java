@@ -5,13 +5,15 @@ package com.calebtravers.models;
  */
 public enum Category {
 
+    PRODUCE ("Produce"),
     MEAT ("Meat"),
     DAIRY ("Dairy"),
-    PRODUCE ("Produce"),
     FREEZER ("Refridgerator/Freezer"),
-    BAKERY ("Bakery"),
+    SPICES ("Spices"),
     BAKING ("Baking"),
-    CANNED ("Packaged/Canned");
+    CANNED ("Packaged/Canned"),
+    BAKERY ("Bakery");
+    ;
 
     private final String name;
 

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container">
+    <h2 th:text="${title}"></h2>
+    <p><a th:href="@{/lists/view/{id}(id=${list.id})}">Sort by Recipe
+    </a> &nbsp;&nbsp;|&nbsp;&nbsp;<strong>Sorted by Department</strong></p>
+
+</div>
+
+<div th:if="${produce} and ${produce.size()}" class="container">
+    <h3>Produce:</h3>
+    <div th:each="ingredient : ${produce}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${meat} and ${meat.size()}" class="container">
+    <h3>Meat:</h3>
+    <div th:each="ingredient : ${meat}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${dairy} and ${dairy.size()}" class="container">
+    <h3>Dairy:</h3>
+    <div th:each="ingredient : ${dairy}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${freezer} and ${freezer.size()}" class="container">
+    <h3>Refridgerator/Freezer:</h3>
+    <div th:each="ingredient : ${freezer}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${spices} and ${spices.size()}" class="container">
+    <h3>Spices:</h3>
+    <div th:each="ingredient : ${spices}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${baking} and ${baking.size()}" class="container">
+    <h3>Baking:</h3>
+    <div th:each="ingredient : ${baking}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${canned} and ${canned.size()}" class="container">
+    <h3>Packaged/Canned:</h3>
+    <div th:each="ingredient : ${canned}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:if="${bakery} and ${bakery.size()}" class="container">
+    <h3>Bakery:</h3>
+    <div th:each="ingredient : ${bakery}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<footer th:replace="fragments :: footer"></footer>
+
+</body>
+</html>

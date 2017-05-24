@@ -95,4 +95,6 @@ public class Recipe {
     public void setShoppingLists(List<ShoppingList> shoppingLists) {
         this.shoppingLists = shoppingLists;
     }
+
+
 }

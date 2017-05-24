@@ -9,6 +9,7 @@
     <h2 th:text="${title}"></h2>
     <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}">
     </div>
+    <p><strong>Sorted by Recipe</strong>&nbsp;&nbsp;|&nbsp;&nbsp;<a th:href="@{/lists/view/sorted/{id}(id=${list.id})}">Sort by Department</a></p>
 </div>
 
 <div class="container">

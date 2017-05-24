@@ -20,6 +20,10 @@
 
 <div class="container">
 <h3>Ingredients:</h3>
+    <br/>
+    <p th:unless="${ingredients} and ${ingredients.size()}">
+        <a th:href="@{/ingredients/add/{id}(id=${recipe.id})}">Add Ingredients</a>
+    </p>
 <br/>
 </div>
 
@@ -54,6 +58,17 @@
             <td><p><a th:href="@{/instructions/edit/{id}/{recipeId}(id=${instruction.id},recipeId=${recipe.id})}">Edit</a></p></td>
         </tr>
     </table>
+</div>
+
+<div class="container" th:if="${recipe.ShoppingLists} and ${recipe.ShoppingLists.size()}">
+    <h3 th:text="'Lists containing this Recipe ' + '(' + ${recipe.ShoppingLists.size()} + ') :'"></h3>
+        <br/>
+        <ul>
+            <li th:each="list : ${recipe.ShoppingLists}">
+                <a th:href="@{/lists/view/{listId}(listId=${list.id})}" th:text="${list.name}"></a>
+            </li>
+        </ul>
+
 </div>
 
 <footer th:replace="fragments :: footer"></footer>

@@ -69,4 +69,117 @@ public class ShoppingList {
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
+
+    public ArrayList<Ingredient> getMeat(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.MEAT){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getProduce(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.PRODUCE){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getDairy(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.DAIRY){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getFreezer(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.FREEZER){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getBakery(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.BAKERY){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getBaking(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.BAKING){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getCanned(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.CANNED){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<Ingredient> getSpices(){
+
+        ArrayList<Ingredient> results = new ArrayList<>();
+
+        for(Recipe recipe : this.getRecipes()){
+            for(Ingredient ingredient : recipe.getIngredients()){
+                if(ingredient.getCategory() == Category.SPICES){
+                    results.add(ingredient);
+                }
+            }
+        }
+        return results;
+    }
+
 }

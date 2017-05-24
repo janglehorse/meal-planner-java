@@ -167,7 +167,7 @@ public class RecipeController {
 
             for(Recipe recipe : recipeDao.findAll()){
 
-                if(recipe.getName().contains(searchTerm)){
+                if(recipe.getName().toLowerCase().contains(searchTerm.toLowerCase())){
                     results.add(recipe);
                 }
             }
@@ -183,7 +183,7 @@ public class RecipeController {
             model.addAttribute("title", "Please enter numbers or letters for search");
       }
 
-        return "recipe/search";
+      return "recipe/search";
 
     }
 
