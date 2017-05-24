@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<nav th:replace="fragments :: head"></nav>
+<head th:replace="fragments :: head"></head>
 
 <body class="container">
 
@@ -18,23 +18,7 @@
 
     </div>
 
-<!--
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Panel title</h3>
-  </div>
-  <div class="panel-body">
-    Panel content
-  </div>
-</div>
-...
-
-<div class="panel-body" th:each="ingredient : ${recipe.ingredients}">
-            <p th:text="${ingredient.name}"></p>
-        </div>
-
--->
-
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

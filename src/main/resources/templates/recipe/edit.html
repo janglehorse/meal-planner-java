@@ -1,49 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 
-<h1 th:text="${title}"></h1>
+<nav th:replace="fragments :: navigation"></nav>
 
-<form method="post" action="/recipes/edit" th:object="${recipe}">
-    <div class="form-group">
-        <label th:for="name">Recipe Name</label>
-        <input class="form-control" value="{$recipe.name}" size="55" th:field="*{name}" />
-        <span th:errors="*{name}" class="error"></span>
-    </div>
-    <div class="form-group">
-        <label th:for="description">Description</label>
-        <input class="form-control" value="${recipe.description}" size="55" th:field="*{description}" />
-        <span th:errors="*{description}" class="error"></span>
-    </div>
-    <input type="hidden" name="recipeId" th:value="${recipe.id}" />
-    <input type="submit" value="Update Recipe" />
-</form>
+
+<div class="container">
+    <h1 th:text="${title}"></h1>
+</div>
+
+<div class="container">
+    <form method="post" action="/recipes/edit" th:object="${recipe}">
+        <div class="form-group">
+            <label th:for="name">Recipe Name</label>
+            <input class="form-control" value="{$recipe.name}" size="55" th:field="*{name}" />
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <input class="form-control" value="${recipe.description}" size="55" th:field="*{description}" />
+            <span th:errors="*{description}" class="error"></span>
+        </div>
+        <input type="hidden" name="recipeId" th:value="${recipe.id}" />
+        <input type="submit" value="Update Recipe" />
+    </form>
+</div>
+
+
+
+<div class="container">
+    <h3>Ingredients:</h3>
+    <br/>
+</div>
 
 <div class="container"
      th:each="ingredient : ${ingredients}">
     <table>
         <tr>
-            <td><p th:text="${ingredient.name}"></p></td>
-            <td><p th:text="${ingredient.quantity}"></p></td>
-            <td><p th:text="${ingredient.unit.name}"></p></td>
-            <td><p th:text="${ingredient.quantity_2}"></p></td>
-            <td><p th:text="${ingredient.unit_2.name}"></p></td>
+            <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+            <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+            <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+            <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+            <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+            <td><p><a th:href="@{/ingredients/edit/{id}/{recipeId}(id=${ingredient.id},recipeId=${recipe.id})}">Edit</a></p></td>
         </tr>
     </table>
 </div>
+
+<div class="container">
+    <h3>Instructions:</h3>
+    <br/>
+</div>
+
 <div class="container"
      th:each="instruction : ${instructions}">
     <table>
         <tr>
-            <td><p th:text="${instruction.number}"></p></td>
-            <td><p th:text="${instruction.text}"></p></td>
+            <td><strong><p th:text="${instruction.number} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+            <td><p th:text="${instruction.text} + '&nbsp;'"></p></td>
+            <td><p><a th:href="@{/instructions/edit/{id}/{recipeId}(id=${instruction.id},recipeId=${recipe.id})}">Edit</a></p></td>
         </tr>
     </table>
 </div>
+
+<footer th:replace="fragments :: footer"></footer>
+
 
 
 </body>
