@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Title</title>
+<head th:replace="fragments :: head">
 </head>
 <body>
+<nav th:replace="fragments :: nav"></nav>
 
-<h1 th:text="${title}">Default Title</h1>
+<div class="container">
 
-<form method="post" style="max-width:600px;" th:object="${recipe}">
-    <div class="form-group">
-        <label th:for="name">Recipe Name</label>
-        <input class="form-control" th:field="*{name}" />
-        <span th:errors="*{name}" class="error"></span>
-    </div>
-    <div class="form-group">
-        <label th:for="description">Description</label>
-        <input class="form-control" th:field="*{description}" />
-        <span th:errors="*{description}" class="error"></span>
-    </div>
-    <input type="submit" value="Add Recipe" />
-</form>
+    <h1 th:text="${title}">Default Title</h1>
 
+    <form method="post" style="max-width:600px;" th:object="${recipe}">
+        <div class="form-group">
+            <label th:for="name">Recipe Name</label>
+            <input class="form-control" th:field="*{name}" />
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <input class="form-control" th:field="*{description}" />
+            <span th:errors="*{description}" class="error"></span>
+        </div>
+        <input type="submit" value="Add Recipe" />
+    </form>
+
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

@@ -73,6 +73,7 @@ public class RecipeController {
 
     @RequestMapping(value="view/{recipeId}", method = RequestMethod.GET)
     public String RecipeDetail(Model model,
+                               @RequestParam(value="msg", required = false) String msg,
                                @PathVariable int recipeId){
 
         Recipe theRecipe = recipeDao.findOne(recipeId);
@@ -82,7 +83,7 @@ public class RecipeController {
         model.addAttribute("recipe", theRecipe);
         model.addAttribute("ingredients", ingredientDao.findByRecipeId(recipeId));
         model.addAttribute("instructions", instructionDao.findByRecipeId(recipeId));
-
+        model.addAttribute("message", msg);
 
         return "recipe/detail";
     }

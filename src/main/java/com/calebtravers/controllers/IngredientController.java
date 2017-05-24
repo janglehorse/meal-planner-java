@@ -28,6 +28,7 @@ public class IngredientController {
 
     @RequestMapping(value = "add/{recipeId}", method = RequestMethod.GET)
     public String addIngredient(@PathVariable int recipeId,
+                                @RequestParam(value="msg", required = false) String msg,
                                 Model model){
 
         model.addAttribute(new Ingredient());
@@ -35,6 +36,7 @@ public class IngredientController {
         model.addAttribute("title", "Add ingredient to " + recipeDao.findOne(recipeId).getName());
         model.addAttribute("categories", Category.values());
         model.addAttribute("units", UnitOfMeasure.values());
+        model.addAttribute("message", msg);
 
         return "ingredient/add";
 
@@ -62,12 +64,13 @@ public class IngredientController {
         ingredientDao.save(ingredient);
         recipeDao.save(recipe);
 
+        String success = ingredient.getName() + " successfully added";
 
         if(userChoice.equals("continue")){
-            return "redirect:/ingredients/add/" + recipeId;
+            return "redirect:/ingredients/add/" + recipeId + "?msg=" + success;
         }
         else {
-            return "redirect:/recipes/view/" + recipeId;
+            return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
         }
 
     }
@@ -111,7 +114,9 @@ public class IngredientController {
         updateIngredient.copyAttributes(ingredient);
         ingredientDao.save(updateIngredient);
 
-        return "redirect:/recipes/view/" + recipeId;
+        String success = ingredient.getName() + " successfully updated";
+
+        return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
     }
 
@@ -126,7 +131,7 @@ public class IngredientController {
         model.addAttribute(ingredient);
         model.addAttribute("recipeId", recipeId);
         model.addAttribute("title", "Are you sure you want to delete " + ingredient.getName() +
-                            " from" + recipe.getName() + "?");
+                            " from " + recipe.getName() + "?");
 
         return "ingredient/delete";
     }

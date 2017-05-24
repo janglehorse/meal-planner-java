@@ -8,6 +8,8 @@
 
 <div class="container">
     <h1 th:text="${title}"></h1>
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}">
+    </div>
     <p><a th:href="@{/recipes/edit/{id}(id=${recipe.id})}">Edit Recipe Name and Description</a></p>
     <p><a th:href="@{/ingredients/add/{id}(id=${recipe.id})}">Add Ingredients</a></p>
     <p><a th:href="@{/instructions/add/{id}(id=${recipe.id})}">Add Instructions</a></p>
@@ -37,6 +39,9 @@
 <div class="container">
     <h3>Instructions:</h3>
     <br/>
+    <p th:unless="${instructions} and ${instructions.size()}">
+        <a th:href="@{/instructions/add/{id}(id=${recipe.id})}">Add Instructions</a>
+    </p>
 </div>
 
 <div class="container"

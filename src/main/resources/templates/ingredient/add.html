@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
+
 <body>
 
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container">
     <h1 th:text="${title}">Default Title</h1>
+</div>
+<br/>
+
+<div class="container">
+
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}">
+    </div>
 
         <form method="post" style="max-width:600px;" action="/ingredients/add" th:object="${ingredient}">
 
@@ -57,13 +65,18 @@
                 </select>
             </div>
 
+            <br/>
 
             <input type="hidden" name="recipeId" th:value="${recipeId}" />
-            <p><input type="radio" name="userChoice" value="continue" />Save and Add Another</p>
-            <p><input type="radio" name="userChoice" value="done" />Done Editing</p>
+            <p><input type="radio" name="userChoice" value="continue" checked="checked"/>&nbsp;Save and Add Another</p>
+            <p><input type="radio" name="userChoice" value="done" />&nbsp;Done Editing</p>
+            <br/>
             <input type="submit" value="Add Ingredient" />
         </form>
 
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
 
 
 </body>
