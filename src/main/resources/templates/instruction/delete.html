@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
+
 <body>
+<nav th:replace="fragments :: navigation"></nav>
 
-    <h1 th:text="${title}"></h1>
-
+<div class="container">
+    <h2 th:text="${title}"></h2>
+</div>
+<br/>
     <div class="container">
         <table>
             <tr>
-                <td><p th:text="${instruction.number}"></p></td>
-                <td><p th:text="${instruction.text}"></p></td>
+                <td><strong><p th:text="${instruction.number} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${instruction.text} + '&nbsp;'"></p></td>
             </tr>
         </table>
     </div>
-
+<br/>
+<div class="container">
     <form method="post" style="max-width:600px;" action="/instructions/delete">
         <input type="hidden" name="instructionId" th:value="${instruction.id}" />
         <input type="hidden" name="recipeId" th:value="${recipeId}" />
         <input type="submit" value="Confirm Delete" />
     </form>
+</div>
+
+    <footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
+
+<head th:replace="fragments :: head"></head>
+
 <body>
 
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container">
     <h1 th:text="${title}">Default Title</h1>
+    <p>
+        <a th:href="@{/instructions/delete/{instructionId}/{recipeId}(instructionId=${instruction.id},recipeId=${recipe.id})}">Delete this Instruction</a>
+    </p>
+</div>
 
-    <td><p><a th:href="@{/instructions/delete/{instructionId}/{recipeId}(instructionId=${instruction.id},recipeId=${recipe.id})}">Delete this Instruction</a></p></td>
-
+<div class="container">
 
     <form method="post" style="max-width:600px;" action="/instructions/edit" th:object="${instruction}">
 
@@ -29,7 +34,10 @@
             <input type="hidden" name="recipeId" th:value="${recipe.id}" />
             <input type="submit" value="Update Ingredient" />
         </form>
+</div>
 
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

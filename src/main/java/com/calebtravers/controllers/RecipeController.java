@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 /**
@@ -30,10 +31,14 @@ public class RecipeController {
     private InstructionDao instructionDao;
 
     @RequestMapping(value="")
-    public String Index(Model model){
+    public String Index(Model model,
+                        @RequestParam(value="msg", required = false) String msg){
 
         model.addAttribute("title", "Recipe Index");
         model.addAttribute("recipes", recipeDao.findAll());
+        if(msg != null){
+            model.addAttribute("message", msg);
+        }
 
         return "recipe/index";
 
@@ -60,16 +65,12 @@ public class RecipeController {
         }
         else{
             recipeDao.save(newRecipe);
-            return "redirect: ";
+            String success = newRecipe.getName() + " added!";
+            return "redirect:" + "?msg=" + success;
 
         }
 
     }
-
-    //TODO:
-    // CREATE OPTIONAL QUERY STRING TO CREATE CONFIRMATION MESSAGES FOR INGREDIENT & INSTRUCTION
-    // CREATE, UPDATE, DELETE
-    // @RequestParam(value = "msg", required = false) String msg,
 
     @RequestMapping(value="view/{recipeId}", method = RequestMethod.GET)
     public String RecipeDetail(Model model,
@@ -118,11 +119,13 @@ public class RecipeController {
 
         //process valid form data
         Recipe updateRecipe = recipeDao.findOne(recipeId);
+        String success = "Update Successful!";
+
         updateRecipe.setName(recipe.getName());
         updateRecipe.setDescription(recipe.getDescription());
         recipeDao.save(updateRecipe);
 
-        return "redirect:view/" + updateRecipe.getId();
+        return "redirect:view/" + updateRecipe.getId() + "?msg=" + success;
 
     }
 

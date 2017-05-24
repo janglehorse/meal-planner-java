@@ -101,6 +101,7 @@ public class IngredientController {
 
         Recipe theRecipe = recipeDao.findOne(recipeId);
         Ingredient updateIngredient = ingredientDao.findOne(ingredientId);
+        String success = ingredient.getName() + " successfully updated";
 
         if(errors.hasErrors()){
 
@@ -113,8 +114,6 @@ public class IngredientController {
 
         updateIngredient.copyAttributes(ingredient);
         ingredientDao.save(updateIngredient);
-
-        String success = ingredient.getName() + " successfully updated";
 
         return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
@@ -143,18 +142,13 @@ public class IngredientController {
 
         Ingredient deleteIngredient = ingredientDao.findOne(ingredientId);
         Recipe recipe = recipeDao.findOne(recipeId);
+        String success = "Deleted " + deleteIngredient.getName() + "!";
 
         recipe.getIngredients().remove(deleteIngredient);
         recipeDao.save(recipe);
         ingredientDao.delete(ingredientId);
 
-        return "redirect:/recipes/view/" + recipeId;
-
-        //TODO:
-        //STORE DELETED INGREDIENT NAME IN VAR:
-        //String confirmDelete = ingredientDao.findOne(ingredientId).getName();
-        //SEND VAR IN QUERY STRING TO RECIPE CONTROLLER TO RENDER CONFIRMATION MESSAGE
-        //+ "?msg=" + confirmDelete;
+        return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
     }
 

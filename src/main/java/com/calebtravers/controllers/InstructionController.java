@@ -55,12 +55,13 @@ public class InstructionController {
         instructionDao.save(instruction);
         recipeDao.save(recipe);
 
+        String success = "Instruction successfully added!";
 
         if(userChoice.equals("continue")){
-            return "redirect:/instructions/add/" + recipeId;
+            return "redirect:/instructions/add/" + recipeId + "?msg=" + success;
         }
         else {
-            return "redirect:/recipes/view/" + recipeId;
+            return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
         }
 
     }
@@ -89,6 +90,7 @@ public class InstructionController {
 
         Recipe recipe = recipeDao.findOne(recipeId);
         Instruction updateInstruction = instructionDao.findOne(instructionId);
+        String success = "Instruction Updated!";
 
         if(errors.hasErrors()){
 
@@ -101,7 +103,7 @@ public class InstructionController {
         updateInstruction.setText(instruction.getText());
         instructionDao.save(updateInstruction);
 
-        return "redirect:/recipes/view/" + recipeId;
+        return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
     }
 
@@ -127,18 +129,13 @@ public class InstructionController {
 
         Instruction deleteInstruction = instructionDao.findOne(instructionId);
         Recipe recipe = recipeDao.findOne(recipeId);
+        String success = "Instruction deleted";
 
         recipe.getInstructions().remove(deleteInstruction);
         recipeDao.save(recipe);
         instructionDao.delete(instructionId);
 
-        return "redirect:/recipes/view/" + recipeId;
-
-        //TODO:
-        //STORE DELETED INGREDIENT NAME IN VAR:
-        //String confirmDelete = instructionDao.findOne(instructionId).getName();
-        //SEND VAR IN QUERY STRING TO RECIPE CONTROLLER TO RENDER CONFIRMATION MESSAGE
-        //+ "?msg=" + confirmDelete;
+        return "redirect:/recipes/view/" + recipeId + "?msg=" + success;
 
     }
 
