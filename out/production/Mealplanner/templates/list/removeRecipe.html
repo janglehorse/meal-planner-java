@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Title</title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<h1 th:text="${title}"></h1>
+<div class="container">
+    <h1 th:text="${title}"></h1>
+</div>
 
-<form method="post" action="/lists/removeRecipe" th:object="${list}">
-    <div class="form-group">
-        <label>Choose Recipe</label>
-        <select class="form-control" name="recipeId">
-            <option th:each="recipe : ${list.recipes}"
-                    th:text="${recipe.name}"
-                    th:value="${recipe.id}"></option>
-        </select>
-    </div>
+<div class="container">
+    <form method="post" action="/lists/removeRecipe" th:object="${list}">
+        <div class="form-group">
+            <label>Choose Recipe</label>
+            <select class="form-control" name="recipeId">
+                <option th:each="recipe : ${list.recipes}"
+                        th:text="${recipe.name}"
+                        th:value="${recipe.id}"></option>
+            </select>
+        </div>
 
-    <input type="hidden" name="listId" th:value="${list.id}" />
-    <input type="submit" value="Delete Recipe From List" />
-</form>
+        <input type="hidden" name="listId" th:value="${list.id}" />
+        <input type="submit" value="Delete Recipe From List" />
+    </form>
+</div>
 
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

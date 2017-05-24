@@ -25,11 +25,14 @@ public class ShoppingListController {
     RecipeDao recipeDao;
 
     @RequestMapping(value="", method = RequestMethod.GET)
-    public String shoppingListIndex(Model model){
+    public String shoppingListIndex(Model model,
+                                    @RequestParam(value="msg", required = false) String msg){
 
         model.addAttribute("title", "Shopping Lists");
         model.addAttribute("lists", shoppingListDao.findAll());
-
+        if(msg != null){
+            model.addAttribute("message", msg);
+        }
         return "list/index";
 
     }
@@ -50,6 +53,8 @@ public class ShoppingListController {
                                      @ModelAttribute @Valid ShoppingList list,
                                      Errors errors){
 
+        String success = list.getName() + " successfully added!";
+
         if(errors.hasErrors()){
 
             model.addAttribute("list", list);
@@ -62,21 +67,25 @@ public class ShoppingListController {
         shoppingListDao.save(list);
 
         if(userChoice.equals("continue")){
-            return "redirect:/lists/addRecipe/" + list.getId();
+            return "redirect:/lists/addRecipe/" + list.getId() + "?msg=" + success;
         }
         else {
-            return "redirect:/lists/view/" + list.getId();
+            return "redirect:/lists/view/" + list.getId() + "?msg=" + success;
         }
     }
 
     @RequestMapping(value="view/{listId}", method = RequestMethod.GET)
     public String shoppingListDetail(Model model,
+                                     @RequestParam(value="msg", required = false) String msg,
                                      @PathVariable int listId){
 
         ShoppingList list = shoppingListDao.findOne(listId);
 
         model.addAttribute("list", list);
         model.addAttribute("title", list.getName());
+        if(msg != null){
+            model.addAttribute("message", msg);
+        }
 
         return "list/detail";
     }
@@ -98,6 +107,7 @@ public class ShoppingListController {
                                               @ModelAttribute @Valid ShoppingList list,
                                               Errors errors){
         ShoppingList updateList = shoppingListDao.findOne(listId);
+        String success = "List name updated!";
 
         if(errors.hasErrors()){
             model.addAttribute("list", updateList);
@@ -108,7 +118,7 @@ public class ShoppingListController {
         updateList.setName(list.getName());
         shoppingListDao.save(updateList);
 
-        return "redirect:view/" + listId;
+        return "redirect:view/" + listId + "?msg=" + success;
 
     }
 
@@ -133,6 +143,7 @@ public class ShoppingListController {
 
         ShoppingList list = shoppingListDao.findOne(listId);
         Recipe recipe = recipeDao.findOne(recipeId);
+        String success = recipe.getName() + " added to list!";
 
         list.addRecipe(recipe);
         recipe.getShoppingLists().add(list);
@@ -140,7 +151,7 @@ public class ShoppingListController {
         shoppingListDao.save(list);
         recipeDao.save(recipe);
 
-        return "redirect:view/" + listId;
+        return "redirect:view/" + listId + "?msg=" + success;
 
     }
 
@@ -162,6 +173,7 @@ public class ShoppingListController {
 
         ShoppingList list = shoppingListDao.findOne(listId);
         Recipe recipe = recipeDao.findOne(recipeId);
+        String success = recipe.getName() + " removed from list";
 
         list.getRecipes().remove(recipe);
         recipe.getShoppingLists().remove(list);
@@ -169,7 +181,7 @@ public class ShoppingListController {
         shoppingListDao.save(list);
         recipeDao.save(recipe);
 
-        return "redirect:view/" + listId;
+        return "redirect:view/" + listId + "?msg=" + success;
 
     }
 
@@ -190,13 +202,14 @@ public class ShoppingListController {
                                         @RequestParam int listId){
 
         ShoppingList list = shoppingListDao.findOne(listId);
+        String success = list.getName() + " successfully deleted";
 
         for(Recipe recipe : list.getRecipes()){
             recipe.getShoppingLists().remove(list);
         }
 
         shoppingListDao.delete(listId);
-        return "redirect:";
+        return "redirect:" + "?msg=" + success;
     }
 
 }

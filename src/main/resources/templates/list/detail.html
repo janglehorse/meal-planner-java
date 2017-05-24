@@ -6,30 +6,55 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <div class="container">
-    <h1 th:text="${title}"></h1>
+    <h2 th:text="${title}"></h2>
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}">
+    </div>
 </div>
-<br />
-<div class="container"
-     th:each="recipe : ${list.recipes}">
-    <strong><p th:text="'For the '+ ${recipe.name} + ':'"></p></strong>
 
-    <table th:each="ingredient : ${recipe.ingredients}">
-        <tr>
-            <td><p th:text="${ingredient.name} + '&nbsp;'"></p></td>
-            <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
-            <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
-            <td><p th:text="${ingredient.quantity_2}+ '&nbsp;'"></p></td>
-            <td><p th:text="${ingredient.unit_2.name}+ '&nbsp;'"></p></td>
-        </tr>
-    </table>
-</div>
-<br />
 <div class="container">
     <p><a th:href="@{/lists/edit/{id}(id=${list.id})}">Edit List Title</a></p>
     <p><a th:href="@{/lists/addRecipe/{id}(id=${list.id})}">Add a Recipe to This List</a></p>
     <p><a th:href="@{/lists/removeRecipe/{id}(id=${list.id})}">Remove a Recipe From This List</a></p>
     <p><a th:href="@{/lists/delete/{id}(id=${list.id})}">Delete This List</a></p>
 </div>
+<br />
+
+<div class="container"
+     th:each="recipe : ${list.recipes}">
+    <strong><h3 th:text="'For the '+ ${recipe.name} + ':'"></h3></strong>
+
+    <div class="container" th:unless="${recipe.ingredients} and ${recipe.ingredients.size()}">
+        <table>
+            <tr>
+                <td>
+                    No ingredients yet.&nbsp;
+                </td>
+                <td>
+                    <a th:href="@{/ingredients/add/{id}(id=${recipe.id})}" th:text="'Add ingredients to ' + ${recipe.name}"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="container"
+         th:each="ingredient : ${recipe.ingredients}">
+        <table>
+            <tr>
+                <td><strong><p th:text="${ingredient.name} + '&nbsp;' + '|' + '&nbsp;'"></p></strong></td>
+                <td><p th:text="${ingredient.quantity} + '&nbsp;'"></p></td>
+                <td><p th:text="${ingredient.unit.name} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.quantity_2 &gt; 0}"><p th:text="${ingredient.quantity_2} + '&nbsp;'"></p></td>
+                <td th:if="${ingredient.unit_2.name != 'None'}"><p th:text="${ingredient.unit_2.name} + '&nbsp;'"></p></td>
+                <td><p><a th:href="@{/ingredients/edit/{id}/{recipeId}(id=${ingredient.id},recipeId=${recipe.id})}">Edit</a></p></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<br />
+
+<footer th:replace="fragments :: footer"></footer>
 
 
 </body>

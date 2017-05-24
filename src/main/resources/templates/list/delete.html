@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+<head th:replace="fragments :: head">
 </head>
 <body>
 
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container">
     <h1 th:text="${title}"></h1>
+</div>
 
     <div class="container">
         <p th:text="${list.name}"></p>
     </div>
+    <div class="container">
+        <form method="post" style="max-width:600px;" action="/lists/delete">
+            <input type="hidden" name="listId" th:value="${list.id}" />
+            <input type="submit" value="Confirm Delete" />
+        </form>
+    </div>
 
-    <form method="post" style="max-width:600px;" action="/lists/delete">
-        <input type="hidden" name="listId" th:value="${list.id}" />
-        <input type="submit" value="Confirm Delete" />
-    </form>
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

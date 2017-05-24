@@ -7,11 +7,14 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <div class="container">
-
     <h2 th:text="${title}">Default Title</h2>
+</div>
 
-<p th:unless="${results} and ${results.size()}">No results! :(</p>
+<div class="container">
 
+    <div th:unless="${results} and ${results.size()}" class="alert alert-success" role="alert">
+        <p>No recipes match your search. <a href="/recipes/add">Add a new one here</a>!</p>
+    </div>
 
     <div class="panel panel-default" th:each="recipe : ${results}">
         <div class="panel-heading">

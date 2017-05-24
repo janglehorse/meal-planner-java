@@ -160,14 +160,15 @@ public class RecipeController {
     public String recipeSearchResults(Model model,
                                       @RequestParam String searchTerm){
 
-        if(!searchTerm.matches("[a-zA-Z0-9]+")) {
+        if(searchTerm.matches("[a-zA-Z0-9]+")) {
 
 
             if (recipeDao.findByName(searchTerm).size() > 0) {
-                model.addAttribute("title", "Search results for " + searchTerm);
+                model.addAttribute("title", "Search results for " + "'" +  searchTerm + "'");
                 model.addAttribute("results", recipeDao.findByName(searchTerm));
             } else {
-                model.addAttribute("title", "No results for " + searchTerm);
+                model.addAttribute("title", "Search results for " + "'" +  searchTerm + "'");
+                model.addAttribute("message", "No results for " + searchTerm);
             }
         }
         else{
