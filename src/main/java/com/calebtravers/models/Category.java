@@ -11,6 +11,7 @@ public enum Category {
     FREEZER ("Refridgerator/Freezer"),
     BAKERY ("Bakery"),
     BAKING ("Baking"),
+    SPICES ("Spices"),
     CANNED ("Packaged/Canned");
 
     private final String name;
