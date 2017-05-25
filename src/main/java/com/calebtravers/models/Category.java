@@ -13,7 +13,6 @@ public enum Category {
     BAKING ("Baking"),
     CANNED ("Packaged/Canned"),
     BAKERY ("Bakery");
-    ;
 
     private final String name;
 
