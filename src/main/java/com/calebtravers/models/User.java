@@ -3,6 +3,7 @@ package com.calebtravers.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * Created by adminbackup on 5/26/17.
