@@ -51,6 +51,19 @@ public class UserController {
 
     }
 
+    @RequestMapping(value="/login", method = RequestMethod.GET)
+    public String login(Model model,
+                        String error,
+                        String logout){
+        if (error != null)
+            model.addAttribute("error", "Invalid username and password.");
+
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
+
+        return "login";
+    }
+
     @RequestMapping(value={"/", "/welcome"}, method=RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";
