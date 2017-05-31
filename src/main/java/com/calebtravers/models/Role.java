@@ -19,6 +19,7 @@ public class Role {
 
     private String name;
 
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
     public int getId() {
@@ -37,7 +38,7 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles")
+
     public Set<User> getUsers() {
         return users;
     }

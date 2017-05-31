@@ -15,18 +15,15 @@ public class User {
     @GeneratedValue
     private int id;
 
-    @NotNull
-    @Size(min=3, max=24)
     private String username;
 
-    @NotNull
-    @Size(min=3, max=24)
     private String password;
 
-    @NotNull
-    @Size(min=3, max=24)
     private String passwordConfirm;
 
+    @ManyToMany
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles;
 
     public int getId() {
@@ -62,9 +59,6 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    @ManyToMany
-    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),
-                inverseJoinColumns = @JoinColumn(name="role_id"))
     public Set<Role> getRoles() {
         return roles;
     }

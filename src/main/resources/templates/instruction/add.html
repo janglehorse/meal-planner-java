@@ -14,13 +14,13 @@
         <form method="post" style="max-width:600px;" action="/instructions/add" th:object="${instruction}">
 
             <div class="form-group">
-                <label th:for="name">Number</label>
+                <label th:for="number">Number</label>
                 <input class="form-control" th:field="*{number}" />
                 <span th:errors="*{number}" class="error"></span>
             </div>
 
             <div class="form-group">
-                <label th:for="quantity">Text</label>
+                <label th:for="text">Text</label>
                 <input class="form-control" size="55" value="Write your instruction here." th:field="*{text}" />
                 <span th:errors="*{text}" class="error"></span>
             </div>

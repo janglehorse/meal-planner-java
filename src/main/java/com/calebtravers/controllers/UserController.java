@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 /**
  * Created by adminbackup on 5/30/17.
@@ -25,27 +28,29 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
-    public String registration(Model model){
-        model.addAttribute("userForm", new User());
+    @RequestMapping(value="/register", method = RequestMethod.GET)
+    public String register(Model model){
 
-        return "registration";
+        model.addAttribute("user", new User());
+        model.addAttribute("title", "Signup");
+
+        return "user/register";
     }
 
-    @RequestMapping(value="/registration", method=RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm,
-                               BindingResult bindingResult,
+    @RequestMapping(value="/register", method=RequestMethod.POST)
+    public String register(@ModelAttribute @Valid User user,
+                               Errors errors,
                                Model model){
 
-        userValidator.validate(userForm, bindingResult);
+        userValidator.validate(user, errors);
 
-        if (bindingResult.hasErrors()){
-            return "registration";
+        if (errors.hasErrors()){
+            return "user/register";
         }
 
-        userService.save(userForm);
+        userService.save(user);
 
-        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+        securityService.autologin(user.getUsername(), user.getPasswordConfirm());
 
         return "redirect:/welcome";
 
@@ -60,13 +65,12 @@ public class UserController {
 
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
+        return "user/login";
     }
 
-    @RequestMapping(value={"/", "/welcome"}, method=RequestMethod.GET)
+    @RequestMapping(value="/welcome", method=RequestMethod.GET)
     public String welcome(Model model) {
-        return "welcome";
+        return "user/welcome";
     }
 
 }

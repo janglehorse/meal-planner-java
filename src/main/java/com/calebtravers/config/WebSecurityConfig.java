@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                     .antMatchers("/", "/recipes", "/lists",
                             "/recipes/view/**", "/lists/view/**",
-                            "/recipes/search", "/registration").permitAll()
+                            "/recipes/search", "/register**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth
-                .userDetailsService(userDetailsService())
+                .userDetailsService(userDetailsService)
                     .passwordEncoder(bCryptPasswordEncoder());
 
     }
